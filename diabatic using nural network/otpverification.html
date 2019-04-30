@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<title>phonenoverify</title>
+
+<style type="text/css">
+  
+.header {
+  background-color:  #007ee3;
+  padding: 20px 10px;
+}
+
+
+
+.header h1.logo {
+  font-size: 60px;
+  font-weight: bold;
+  text-align:center;
+  color: #ffffff
+
+}
+
+
+body {
+
+
+background-color: #edeef1
+
+}
+
+
+ #h2{
+position: absolute;
+    bottom:58%; 
+    left: 43%
+    }
+
+#h3{
+    position: absolute;
+    bottom:38%; 
+    left: 43%
+    }
+
+
+
+ #b{ width:20%;
+         height: 50px; 
+      position: absolute;
+      background-color: #768591;
+      color: #ffffff;
+      font-size: 20px;
+      bottom:15%;
+      left:25%; 
+      border-radius: 20px; }
+
+    #b1{ width:20%;
+         height: 50px; 
+      position: absolute;
+      background-color: #768591;
+      color: #ffffff;
+      font-size: 20px;
+      bottom:15%;
+      left:58%; 
+      border-radius: 20px; }   
+
+ #i1{width:20%; 
+    position: absolute;
+    bottom:30%;
+    height: 8%;
+    left:41%; 
+    text-align: center;
+    font-size: 30px;
+    border-radius: 20px;}
+
+
+
+</style>
+
+<head>
+<body>
+ <div class="header">
+  <h1  class="logo" >DIABATIC CARE</h1>
+   </div>
+    <h2 id="h2">VERIFY NUMBER</h2>
+    <h3 id="h3">ENTER OTP NUMBER</h3>
+	<form>
+    <input   id="i1"  type="number" />
+    <input type=button value="VERIFY" id="b" onclick="verifyotp(event)" />
+     <input type=button value="RESEND OTP" id="b1" onclick="resendotp(event)" />
+    </form>
+   <script>
+  function verifyotp(event)
+{
+       var otp=document.getElementById("i1").value;
+       sotp=localStorage["systemotp"];
+       if(sotp==otp)
+       {
+        alert("verified");
+        localStorage["verifiedph"]=localStorage["tempph"];
+        window.open("file:///home/abdulrehman/docteraccountcreation.html","_self");
+       }
+       else
+       {
+        alert("WRONG OTP");
+       }
+      
+
+    }
+
+
+
+
+     function resendotp(event)
+{      var phoneno=localStorage["tempph"];
+       var pageid=7;
+       var fdata=pageid+"%"+phoneno;
+         var ws = new WebSocket("ws://127.0.0.1:5678/");        
+         ws.onopen=function() {
+               alert("connect");
+               ws.send(fdata);
+             }   
+
+
+
+
+
+         ws.onmessage=function(event)
+         {
+           var reciveddata=event.data;
+           arr=reciveddata.split("$");
+           rdata=arr[0];
+           otp=arr[1]
+           if(rdata=="0")
+           {
+            alert("OPT send sussesfully");
+           localStorage["systemotp"]=otp;
+           window.open("file:///home/abdulrehman/otpverification.html","_self");
+           }
+           if(rdata=="1")
+           {
+             alert("MOBILE NUMBER IS IN DND MODE(DO NOT DESTURB MODE)");
+           }
+           if(rdata=="2")
+           {
+             alert("INVALID NUMBER");
+           }
+           if(rdata=="3")
+           {
+             alert("CANT SEND OPT BEFORE 9AM AND AFTER 9PM DUE TO LEGAL RESTRICTION");
+           }
+           if(rdata=="4")
+           {
+             alert("PROBLEM IN SMS PROVIDER TRY LATER");
+           }
+        }
+
+
+    }
+   </script>
+   </body>
+   </html>     

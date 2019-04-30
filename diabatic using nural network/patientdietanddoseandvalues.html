@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+<title>owneraccountcreating</title>
+<style type=text/css>
+
+
+.header {
+  background-color:  #007ee3;
+  padding: 20px 10px;
+}
+
+
+
+.header h1.logo {
+  font-size: 30px;
+  font-weight: bold;
+  text-align:center;
+  color: #ffffff
+
+}
+
+body{
+
+
+background-color: #edeef1;
+
+}
+
+#h100{
+  text-align: center;
+}
+
+
+#h1,#i1{position: absolute;
+left:65%;
+bottom:60%;}
+#h2,#i2{position: absolute;
+left:65%;
+bottom:50%;}
+#h3,#i3{position: absolute;
+left:65%;
+bottom:40%;}
+#h4{position: absolute;
+left:65%;
+bottom:30%;}
+#i4{position: absolute;
+left:65%;
+bottom:27%;}
+#h5,#i5{position: absolute;
+right:65%;
+bottom:20%;}
+#h6,#i6{position: absolute;
+right:65%;
+bottom:60%;}
+#h7,#i7{position: absolute;
+right:65%;
+bottom:50%;}
+#h8,#i8{position: absolute;
+right:65%;
+bottom:40%;}
+#h9,#i9{position: absolute;
+right:65%;
+bottom:30%;}
+
+
+
+
+
+#b{
+ width:10%;
+ height: 50px; 
+ position: absolute;
+ background-color: #29a329;
+ color: #ffffff;
+ font-size:20px;
+ font-weight: bold;
+ bottom:5%;
+ left:30%; 
+ border-radius: 20px; }
+
+ #b1{ width:10%;
+ height: 50px; 
+ position: absolute;
+ background-color: #29a329;
+ color: #ffffff;
+ font-size: 20px;
+ bottom:5%;
+ left:55%; 
+ font-weight: bold;
+ border-radius: 20px; 
+   }  
+
+
+#b:hover{
+  background-color: green;
+  width:15%;
+  height: 80px; 
+  font-size:50px;
+
+}
+
+
+#b1:hover{
+  background-color: green;
+  width:15%;
+  height: 60px; 
+  font-size:25px;
+
+}
+
+
+
+</style>
+</head>
+<body>
+<div class="header">
+<h1  class="logo" >DIABATIC CARE</h1>
+</div> 
+<h1 id="h100">DIABATIC VALUE DOSE  AND DIET</h1>
+<form>
+<h2 id="h1" style="color:green" >PROTIENS</h2>
+<input   id="i1" type="number" pattern="[0-9]" max="100"  />
+<h2 id=h2  style="color:green" >CARBOHYDRATES</h2>
+<input   id="i2"  type="number"  max="100" />
+<h2 id="h3"  style="color:green" >FAT</h2>
+<input id="i3"  type="number" max="100" />
+<h2 id="h4"  style="color:green" >DRUG</h2>
+<textarea id="i4"></textarea> 
+<h2 id="h5"  style="color:green" >REPORT DATE</h2>
+<input type=date id="i5" />
+<h2 id="h6"  style="color:green" > BLOOD DIABATIC VALUE BEFORE FOOD</h2>
+<input type="number" id="i6" />
+<h2 id="h7"  style="color:green" >BLOOD DIABATIC VALUE AFTER FOOD</h2>
+<input type="number" id="i7" />
+<h2 id="h8"  style="color:green" >URINE DIABATIC VALUE BEDORE FOOD</h2>
+<input type="number" id="i8" />
+<h2 id="h9"  style="color:green" >URINE DIABATIC VALUE AFTER FOOD</h2>
+<input type="number" id="i9" />
+<input type=button id="b" value="Save" onclick="senddata(event)">
+<input type=button id="b1" value="Back" onclick="back(event)">
+</form>
+   <script>
+  function senddata(event)
+{
+       var pageid=11;
+       var protien=document.getElementById("i1").value;
+       var carbohydrate=document.getElementById("i2").value;
+       var fat=document.getElementById("i3").value;
+       var dose=document.getElementById("i4").value;
+       var reportdate=document.getElementById("i5").value;
+       var bbf=document.getElementById("i6").value;
+       var baf=document.getElementById("i7").value;
+       var ubf=document.getElementById("i8").value;
+       var uaf=document.getElementById("i9").value;
+    
+
+
+       var pphoneno=localStorage["pph"];
+       var dphoneno=localStorage["ph"];
+
+
+
+
+
+       var today = new Date();
+       var dd = today.getDate();
+       var mm = today.getMonth()+1; //January is 0!
+       var yyyy = today.getFullYear();
+       var presentdate = yyyy + "-" + mm + "-" + dd;
+       //var presentdate="2018-12-18";
+       alert(presentdate);
+      
+       var fdata=pageid+"%"+protien+"$"+carbohydrate+"$"+fat+"$"+dose+"$"+presentdate+"$"+reportdate+"$"+pphoneno+"$"+dphoneno+"$"+bbf+"$"+baf+"$"+ubf+"$"+uaf;
+
+
+         var ws = new WebSocket("ws://127.0.0.1:5678/");        
+         ws.onopen=function() {
+               alert("connect");
+               ws.send(fdata);
+             }
+             
+             
+             
+             
+             
+         ws.onmessage=function(event)
+         {
+           var rdata=event.data;
+           if(rdata=="1")
+            { alert("saved");
+              window.open("file:///home/abdulrehman/patienthone.html","_self");
+            }  
+        }
+      }
+        
+      
+
+  function back(event)
+{
+ window.open("file:///home/abdulrehman/patienthone.html","_self");
+}
+
+ </script>
+<body>
+</html>

@@ -1,0 +1,735 @@
+<html>
+<head>
+<style type="text/css">
+.header {
+  background-color:  #007ee3;
+  padding: 20px 10px;
+}
+
+
+
+.header h1.logo {
+  font-size: 30px;
+  font-weight: bold;
+  text-align:center;
+  color: #ffffff
+
+}
+
+body {
+
+
+background-color: #edeef1
+
+}
+
+
+#h1{
+  text-align: center;
+}
+
+#b:hover{
+  background-color: green;
+  width:15%;
+  height: 80px; 
+  font-size:50px;
+
+}
+
+
+#b1:hover{
+  background-color: green;
+  width:15%;
+  height: 60px; 
+  font-size:25px;
+
+}
+
+ #b{ width:10%;
+         height: 70px; 
+      position: absolute;
+      background-color: #29a329;
+      color: #ffffff;
+      font-size:40px;
+      font-weight: bold;
+      bottom:70%;
+      left:80%; 
+      border-radius: 20px; }
+
+    #b1{ width:10%;
+         height: 50px; 
+      position: absolute;
+      background-color: #29a329;
+      color: #ffffff;
+      font-size: 20px;
+      bottom:70%;
+      left:5%; 
+      font-weight: bold;
+      border-radius: 20px; }   
+
+
+</style>
+<title>HOME</title>
+</head>
+<body>
+<div class="header">
+<h1  class="logo" >DIABATIC CARE</h1>
+</div> 
+<input type="button"  id="b" value="+" onclick="addreport()"/>
+<input type=button id="b1" value="back" onclick="back(event)">
+<h1 id="h1">PATIENT HOME</h1>
+<script>
+
+
+var ws = new WebSocket("ws://127.0.0.1:5678/");       
+         ws.onopen=function() {
+               var pphoneno=localStorage["pph"];
+               var dphoneno=localStorage["ph"];
+               var pageid="12";
+               var sdata=pageid+"%"+pphoneno+"&"+dphoneno;
+               alert("connect");
+               ws.send(sdata);
+             }
+             
+             
+             
+         
+        
+ 
+ var datapresent=0;            
+ var c=0;            
+ var rdata=[];           
+ ws.onmessage=function(event)
+  {c=c+1;
+   rdata[c]=event.data;
+ if(rdata[c]=="ok") 
+  {var ownerdetails=rdata[1].split("&");
+   var tarr=ownerdetails[0].split("$");   
+   var profileimg=ownerdetails[1];
+   var arr=rdata[2].split("&");
+   var actualdata=arr[1]; 
+ if(actualdata=="")
+   {
+   alert("no report");
+   ws.close();
+   }        
+else
+{
+datapresent=1;
+ws.close();
+}
+
+
+
+if(datapresent==1)
+{
+ 
+
+var count=0;
+var data1=actualdata.split("%");
+var len=data1.length;
+var imgcount=3;
+for(var i=0;i<=len*55;i=i+60)
+{
+data2=data1[count].split("$");
+var p1=document.createElement("p");
+var node=document.createTextNode("PROTEINS");
+p1.appendChild(node);
+p1.setAttribute("align","center");
+p1.setAttribute("id","t1");
+p1.style.position="absolute";
+p1.style.right="40%";
+var temp=i+25;
+var s=temp.toString();
+var f=s+"%";
+p1.style.top=f;
+p1.style.color="green";
+document.body.appendChild(p1);
+
+
+
+
+
+var p1v=document.createElement("p");
+var node=document.createTextNode(data2[0]);
+p1v.appendChild(node);
+p1v.setAttribute("align","center");
+p1v.setAttribute("id","t1");
+p1v.style.position="absolute";
+p1v.style.right="30%";
+var temp=i+25;
+var s=temp.toString();
+var f=s+"%";
+p1v.style.top=f;
+document.body.appendChild(p1v);
+
+
+
+
+
+
+var p2=document.createElement("p");
+var node=document.createTextNode("CARBOHYDRATES");
+p2.appendChild(node);
+p2.setAttribute("align","center");
+p2.setAttribute("id","t2");
+p2.style.position="absolute";
+p2.style.right="40%";
+var temp=i+30;
+var s=temp.toString();
+var f=s+"%";
+p2.style.top=f;
+p2.style.color="green";
+document.body.appendChild(p2);
+
+
+
+
+
+
+
+var p2v=document.createElement("p");
+var node=document.createTextNode(data2[1]);
+p2v.appendChild(node);
+p2v.setAttribute("align","center");
+p2v.setAttribute("id","t2");
+p2v.style.position="absolute";
+p2v.style.right="30%";
+var temp=i+30;
+var s=temp.toString();
+var f=s+"%";
+p2v.style.top=f;
+document.body.appendChild(p2v);
+
+
+
+
+
+
+
+var p3=document.createElement("p");
+var node=document.createTextNode("FAT");
+p3.appendChild(node);
+p3.setAttribute("align","center");
+p3.setAttribute("id","t3");
+p3.style.position="absolute";
+p3.style.right="40%";
+var temp=i+35;
+var s=temp.toString();
+var f=s+"%";
+p3.style.top=f;
+p3.style.color="green";
+document.body.appendChild(p3);
+
+
+
+
+
+var p3v=document.createElement("p");
+var node=document.createTextNode(data2[2]);
+p3v.appendChild(node);
+p3v.setAttribute("align","center");
+p3v.setAttribute("id","t3");
+p3v.style.position="absolute";
+p3v.style.right="30%";
+var temp=i+35;
+var s=temp.toString();
+var f=s+"%";
+p3v.style.top=f;
+document.body.appendChild(p3v);
+
+
+
+
+
+
+
+
+var p4=document.createElement("p");
+var node=document.createTextNode("GIVEN DATE");
+p4.appendChild(node);
+p4.setAttribute("align","center");
+p4.setAttribute("id","t4");
+p4.style.position="absolute";
+p4.style.right="40%";
+var temp=i+40;
+var s=temp.toString();
+var f=s+"%";
+p4.style.top=f;
+p4.style.color="green";
+document.body.appendChild(p4);
+
+
+
+
+
+
+var p4v=document.createElement("p");
+var node=document.createTextNode(data2[3]);
+p4v.appendChild(node);
+p4v.setAttribute("align","center");
+p4v.setAttribute("id","t4");
+p4v.style.position="absolute";
+p4v.style.right="30%";
+var temp=i+40;
+var s=temp.toString();
+var f=s+"%";
+p4v.style.top=f;
+document.body.appendChild(p4v);
+
+
+
+
+var p5=document.createElement("p");
+var node=document.createTextNode("REPORT DATE");
+p5.appendChild(node);
+p5.setAttribute("align","center");
+p5.setAttribute("id","t5");
+p5.style.position="absolute";
+p5.style.right="40%";
+var temp=i+45;
+var s=temp.toString();
+var f=s+"%";
+p5.style.top=f;
+p5.style.color="green";
+document.body.appendChild(p5);
+
+
+
+
+
+
+var p5v=document.createElement("p");
+var node=document.createTextNode(data2[4]);
+p5v.appendChild(node);
+p5v.setAttribute("align","center");
+p5v.setAttribute("id","t5");
+p5v.style.position="absolute";
+p5v.style.right="30%";
+var temp=i+45;
+var s=temp.toString();
+var f=s+"%";
+p5v.style.top=f;
+document.body.appendChild(p5v);
+
+
+
+var p6=document.createElement("p");
+var node=document.createTextNode("DRUGS");
+p6.appendChild(node);
+p6.setAttribute("align","center");
+p6.setAttribute("id","t6");
+p6.style.position="absolute";
+p6.style.right="40%";
+var temp=i+50;
+var s=temp.toString();
+var f=s+"%";
+p6.style.top=f;
+p6.style.color="green";
+document.body.appendChild(p6);
+
+
+
+
+
+
+var p6v=document.createElement("div");
+var node=document.createTextNode(data2[5]);
+p6v.appendChild(node);
+p6v.setAttribute("align","center");
+p5v.setAttribute("id","t6");
+p6v.style.position="absolute";
+p6v.style.right="30%";
+var temp=i+52;
+var s=temp.toString();
+var f=s+"%";
+p6v.style.top=f;
+p6v.style.width="100px";
+p6v.style.overflow="auto";
+document.body.appendChild(p6v);
+
+
+
+
+var p7=document.createElement("p");
+var node=document.createTextNode("BLOOD SUGAR BEFORE FOOD");
+p7.appendChild(node);
+p7.setAttribute("align","center");
+p7.setAttribute("id","t7");
+p7.style.position="absolute";
+p7.style.right="40%";
+var temp=i+55;
+var s=temp.toString();
+var f=s+"%";
+p7.style.top=f;
+p7.style.color="green";
+document.body.appendChild(p7);
+
+
+
+
+
+
+var p7v=document.createElement("p");
+var node=document.createTextNode(data2[6]);
+p7v.appendChild(node);
+p7v.setAttribute("align","center");
+p7v.setAttribute("id","t7");
+p7v.style.position="absolute";
+p7v.style.right="30%";
+var temp=i+55;
+var s=temp.toString();
+var f=s+"%";
+p7v.style.top=f;
+document.body.appendChild(p7v);
+
+
+
+var p8=document.createElement("p");
+var node=document.createTextNode("BLOOD SUGAR AFTER FOOD");
+p8.appendChild(node);
+p8.setAttribute("align","center");
+p8.setAttribute("id","t8");
+p8.style.position="absolute";
+p8.style.right="40%";
+var temp=i+60;
+var s=temp.toString();
+var f=s+"%";
+p8.style.top=f;
+p8.style.color="green";
+document.body.appendChild(p8);
+
+
+
+
+
+
+var p8v=document.createElement("p");
+var node=document.createTextNode(data2[7]);
+p8v.appendChild(node);
+p8v.setAttribute("align","center");
+p8v.setAttribute("id","t8");
+p8v.style.position="absolute";
+p8v.style.right="30%";
+var temp=i+60;
+var s=temp.toString();
+var f=s+"%";
+p8v.style.top=f;
+document.body.appendChild(p8v);
+
+
+
+var p9=document.createElement("p");
+var node=document.createTextNode("URINE SUGAR BEFORE FOOD");
+p9.appendChild(node);
+p9.setAttribute("align","center");
+p9.setAttribute("id","t9");
+p9.style.position="absolute";
+p9.style.right="40%";
+var temp=i+65;
+var s=temp.toString();
+var f=s+"%";
+p9.style.top=f;
+p9.style.color="green";
+document.body.appendChild(p9);
+
+
+
+
+
+
+var p9v=document.createElement("p");
+var node=document.createTextNode(data2[8]);
+p9v.appendChild(node);
+p9v.setAttribute("align","center");
+p9v.setAttribute("id","t9");
+p9v.style.position="absolute";
+p9v.style.right="30%";
+var temp=i+65;
+var s=temp.toString();
+var f=s+"%";
+p9v.style.top=f;
+document.body.appendChild(p9v);
+
+
+
+var p10=document.createElement("p");
+var node=document.createTextNode("URINE SUGAR AFTER FOOD");
+p10.appendChild(node);
+p10.setAttribute("align","center");
+p10.setAttribute("id","t10");
+p10.style.position="absolute";
+p10.style.right="40%";
+var temp=i+70;
+var s=temp.toString();
+var f=s+"%";
+p10.style.top=f;
+p10.style.color="green";
+document.body.appendChild(p10);
+
+
+
+
+
+
+var p10v=document.createElement("p");
+var node=document.createTextNode(data2[9]);
+p10v.appendChild(node);
+p10v.setAttribute("align","center");
+p10v.setAttribute("id","t10");
+p10v.style.position="absolute";
+p10v.style.right="30%";
+var temp=i+70;
+var s=temp.toString();
+var f=s+"%";
+p10v.style.top=f;
+document.body.appendChild(p10v);
+
+
+
+
+if(count<len)
+{
+count=count+1;
+imgcount=imgcount+1;
+}
+
+
+
+
+
+}
+}
+
+
+var p1=document.createElement("p");
+var node=document.createTextNode("PATIENT NAME");
+p1.appendChild(node);
+p1.setAttribute("align","center");
+p1.setAttribute("id","t1");
+p1.style.position="absolute";
+p1.style.right="90%";
+p1.style.top="50%";
+p1.style.color="green";
+document.body.appendChild(p1);
+
+
+
+
+
+var p1v=document.createElement("p");
+var node=document.createTextNode(tarr[0]);
+p1v.appendChild(node);
+p1v.setAttribute("align","center");
+p1v.setAttribute("id","t1");
+p1v.style.position="absolute";
+p1v.style.right="80%";
+p1v.style.top="50%";
+document.body.appendChild(p1v);
+
+
+
+
+
+
+var p2=document.createElement("p");
+var node=document.createTextNode("CONTACT NUMBER");
+p2.appendChild(node);
+p2.setAttribute("align","center");
+p2.setAttribute("id","t2");
+p2.style.position="absolute";
+p2.style.right="90%";
+p2.style.top="60%";
+p2.style.color="green";
+document.body.appendChild(p2);
+
+
+
+
+
+
+
+var p2v=document.createElement("p");
+var node=document.createTextNode(tarr[1]);
+p2v.appendChild(node);
+p2v.setAttribute("align","center");
+p2v.setAttribute("id","t2");
+p2v.style.position="absolute";
+p2v.style.right="80%";
+p2v.style.top="60%";
+document.body.appendChild(p2v);
+
+
+
+
+
+
+
+var p3=document.createElement("p");
+var node=document.createTextNode("EMAIL");
+p3.appendChild(node);
+p3.setAttribute("align","center");
+p3.setAttribute("id","t3");
+p3.style.position="absolute";
+p3.style.right="90%";
+p3.style.top="70%";
+p3.style.color="green";
+document.body.appendChild(p3);
+
+
+
+
+
+var p3v=document.createElement("div");
+var node=document.createTextNode(tarr[2]);
+p3v.appendChild(node);
+p3v.setAttribute("align","center");
+p3v.setAttribute("id","t3");
+p3v.style.position="absolute";
+p3v.style.right="80%";
+p3v.style.top="72%";
+p3v.style.width="100px";
+p3v.style.overflow="auto";
+document.body.appendChild(p3v);
+
+
+
+
+
+
+
+
+var p4=document.createElement("p");
+var node=document.createTextNode("TYPE OF PATIENT");
+p4.appendChild(node);
+p4.setAttribute("align","center");
+p4.setAttribute("id","t4");
+p4.style.position="absolute";
+p4.style.right="90%";
+p4.style.top="80%";
+p4.style.color="green";
+document.body.appendChild(p4);
+
+
+
+
+
+
+var p4v=document.createElement("div");
+var node=document.createTextNode(tarr[3]);
+p4v.appendChild(node);
+p4v.setAttribute("align","center");
+p4v.setAttribute("id","t4");
+p4v.style.position="absolute";
+p4v.style.right="80%";
+p4v.style.top="82%";
+p4v.style.width="100px";
+p4v.style.overflow="auto";
+document.body.appendChild(p4v);
+
+
+
+
+
+
+
+
+
+var x=document.createElement("IMG");
+x.setAttribute("src",profileimg);
+x.setAttribute("width","150");
+x.setAttribute("align","middle");
+x.setAttribute("height","100");
+x.setAttribute("id","pic");
+x.style.position="absolute";
+x.style.right="83%";
+x.style.top="35%";
+document.body.appendChild(x);
+
+
+
+var b11=document.createElement("input");
+b11.setAttribute("type","button");
+b11.setAttribute("value","G R BEFORE FOOD");
+b11.setAttribute("onclick","graphicalrepresentaion1(event)");
+b11.style.position="absolute";
+b11.style.right="2%";
+b11.style.top="35%";
+b11.style.width="200px"
+b11.style.height="50px"
+b11.style.background="green";
+b11.style.color="white";
+document.body.appendChild(b11);
+
+
+
+
+
+
+
+
+var b12=document.createElement("input");
+b12.setAttribute("type","button");
+b12.setAttribute("value","G R AFTER FOOD");
+b12.setAttribute("onclick","graphicalrepresentaion2(event)");
+b12.style.position="absolute";
+b12.style.right="2%";
+b12.style.top="50%";
+b12.style.width="200px"
+b12.style.height="50px"
+b12.style.color="white";
+b12.style.background="green";
+document.body.appendChild(b12);
+
+
+var b13=document.createElement("input");
+b13.setAttribute("type","button");
+b13.setAttribute("value","PREDICTION OF DIET");
+b13.setAttribute("onclick","dietbymi(event)");
+b13.style.position="absolute";
+b13.style.right="2%";
+b13.style.top="65%";
+b13.style.width="200px";
+b13.style.height="50px";
+b13.style.color="white";
+b13.style.background="green";
+document.body.appendChild(b13);
+
+}
+}
+
+
+
+function addreport(event)
+{
+ window.open("file:///home/abdulrehman/patientdietanddoseandvalues.html","_self");
+}
+
+
+
+
+
+
+function graphicalrepresentaion1(event)
+{
+ window.open("file:///home/abdulrehman/graph1.html","_self");
+}
+
+function graphicalrepresentaion2(event)
+{
+ window.open("file:///home/abdulrehman/graph2.html","_self");
+}
+
+function dietbymi(event)
+{
+ window.open("file:///home/abdulrehman/nuralnetwork.html","_self");
+}
+
+ function back(event)
+{
+ window.open("file:///home/abdulrehman/docterhome.html","_self");
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+  .header {
+  background-color:  #007ee3;
+  padding: 20px 10px;
+}
+
+
+
+.header h1.logo {
+  font-size: 30px;
+  font-weight: bold;
+  text-align:center;
+  color: #ffffff
+
+}
+
+body {
+
+
+background-color: #edeef1
+
+}
+
+#h100{
+  text-align: center;
+}
+
+
+#b{
+ width:10%;
+ height: 50px; 
+ position: absolute;
+ background-color: #29a329;
+ color: #ffffff;
+ font-size:20px;
+ font-weight: bold;
+ bottom:10%;
+ left:45%; 
+ border-radius: 20px; }
+
+
+ #b:hover{
+  background-color: green;
+  width:15%;
+  height: 80px; 
+  font-size:50px;
+
+}
+
+
+</style>
+<script type="text/javascript">
+
+
+
+
+
+    var ws = new WebSocket("ws://127.0.0.1:5678/");       
+         ws.onopen=function() {
+               var pphoneno=localStorage["pph"];
+               var dphoneno=localStorage["ph"];
+               var pageid="14";
+               var sdata=pageid+"%"+pphoneno+"&"+dphoneno;
+               alert("connect");
+               ws.send(sdata);
+             }
+
+
+
+
+   ws.onmessage=function(event)
+  {
+   rdata=event.data;
+   alert("recived");   
+
+if (rdata=="insuffecint diabatic values and diet values for prediction(alest 5 values)")
+{
+  alert(rdata);
+}
+else{
+var tarr=rdata.split("$");
+var p1=document.createElement("p");
+var node=document.createTextNode("PROTIENS");
+p1.appendChild(node);
+p1.setAttribute("align","center");
+p1.setAttribute("id","t1");
+p1.style.position="absolute";
+p1.style.right="60%";
+p1.style.top="35%";
+p1.style.color="green";
+document.body.appendChild(p1);
+
+
+
+
+
+var p1v=document.createElement("p");
+var node=document.createTextNode(tarr[0]);
+p1v.appendChild(node);
+p1v.setAttribute("align","center");
+p1v.setAttribute("id","t1");
+p1v.style.position="absolute";
+p1v.style.right="40%";
+p1v.style.top="35%";
+document.body.appendChild(p1v);
+
+
+
+
+
+
+var p2=document.createElement("p");
+var node=document.createTextNode("CARBOHYDRATES");
+p2.appendChild(node);
+p2.setAttribute("align","center");
+p2.setAttribute("id","t2");
+p2.style.position="absolute";
+p2.style.right="60%";
+p2.style.top="45%";
+p2.style.color="green";
+document.body.appendChild(p2);
+
+
+
+
+
+
+
+var p2v=document.createElement("p");
+var node=document.createTextNode(tarr[1]);
+p2v.appendChild(node);
+p2v.setAttribute("align","center");
+p2v.setAttribute("id","t2");
+p2v.style.position="absolute";
+p2v.style.right="40%";
+p2v.style.top="45%";
+document.body.appendChild(p2v);
+
+
+
+
+
+
+
+var p3=document.createElement("p");
+var node=document.createTextNode("FAT");
+p3.appendChild(node);
+p3.setAttribute("align","center");
+p3.setAttribute("id","t3");
+p3.style.position="absolute";
+p3.style.right="60%";
+p3.style.top="55%";
+p3.style.color="green";
+document.body.appendChild(p3);
+
+
+
+
+
+var p3v=document.createElement("p");
+var node=document.createTextNode(tarr[2]);
+p3v.appendChild(node);
+p3v.setAttribute("align","center");
+p3v.setAttribute("id","t3");
+p3v.style.position="absolute";
+p3v.style.right="40%";
+p3v.style.top="55%";
+document.body.appendChild(p3v);
+
+
+
+
+
+
+
+
+var p4=document.createElement("p");
+var node=document.createTextNode("PREDICTED DIABETIC VALUE FOR THE DIET IS");
+p4.appendChild(node);
+p4.setAttribute("align","center");
+p4.setAttribute("id","t4");
+p4.style.position="absolute";
+p4.style.right="60%";
+p4.style.top="65%";
+p4.style.color="green";
+document.body.appendChild(p4);
+
+
+
+
+
+
+var p4v=document.createElement("p");
+var node=document.createTextNode(tarr[3]);
+p4v.appendChild(node);
+p4v.setAttribute("align","center");
+p4v.setAttribute("id","t4");
+p4v.style.position="absolute";
+p4v.style.right="40%";
+p4v.style.top="65%";
+document.body.appendChild(p4v);
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+ function back(event)
+{
+ window.open("file:///home/abdulrehman/patienthone.html","_self");
+}
+
+
+
+
+
+</script>
+</head>
+<body>
+<div class="header">
+<h1  class="logo" >DIABATIC CARE</h1>
+</div> 
+<h1 id="h100">DIET PREDICTION</h1>
+<input type=button id="b" value="BACK" onclick="back(event)">
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <style type="text/css">
+    
+#b{
+ width:10%;
+ height: 50px; 
+ position: absolute;
+ background-color: #29a329;
+ color: #ffffff;
+ font-size:20px;
+ font-weight: bold;
+ bottom:25%;
+ left:45%; 
+ border-radius: 20px; }
+
+
+ #b:hover{
+  background-color: green;
+  width:15%;
+  height: 80px; 
+  font-size:50px;
+
+}
+
+  </style>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+
+window.onload = function () {
+
+
+
+
+    var ws = new WebSocket("ws://127.0.0.1:5678/");       
+         ws.onopen=function() {
+               var pphoneno=localStorage["pph"];
+               var dphoneno=localStorage["ph"];
+               var pageid="13";
+               var sdata=pageid+"%"+pphoneno+"&"+dphoneno;
+               alert("connect");
+               ws.send(sdata);
+             }
+
+
+
+
+   ws.onmessage=function(event)
+  {
+   rdata=event.data;
+   alert("recived");
+if(rdata=="insuffecint diabatic values for ploting graph(alest 5 values)") 
+{
+   alert(rdata);
+} 
+else{  
+   var arr=rdata.split("&");
+   var actualdata=arr[1]; 
+   arrset=actualdata.split("%");
+   set1=arrset[0].split("$");
+   set2=arrset[1].split("$");
+   set3=arrset[2].split("$");
+   set4=arrset[3].split("$");
+   set5=arrset[4].split("$");
+   alert(set1[0]);
+
+   
+
+
+
+   
+    var chart = new CanvasJS.Chart("chartContainer", {
+        title:{
+            text: "DIABETIC VALUE BEFORE FOOD"              
+        },
+        data: [              
+        {
+            // Change type to "doughnut", "line", "splineArea", etc.
+            type: "line",
+           dataPoints: [
+        { x: new Date(parseInt(set1[2]), parseInt(set1[3]), parseInt(set1[4])), y: parseInt(set1[0])},
+        { x: new Date(parseInt(set2[2]), parseInt(set2[3]), parseInt(set2[4])), y: parseInt(set2[0])},
+        { x: new Date(parseInt(set3[2]), parseInt(set3[3]), parseInt(set3[4])), y: parseInt(set3[0])},
+        { x: new Date(parseInt(set4[2]), parseInt(set4[3]), parseInt(set4[4])), y: parseInt(set4[0])},
+        { x: new Date(parseInt(set5[2]), parseInt(set5[3]), parseInt(set5[4])), y: parseInt(set5[0])}
+        ]
+        }
+        ]
+    });
+    chart.render();
+
+
+
+
+
+
+
+}
+}
+}
+
+
+
+
+
+
+
+
+ function back(event)
+{
+ window.open("file:///home/abdulrehman/patienthone.html","_self");
+}
+
+
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<input type=button id="b" value="BACK" onclick="back(event)">
+</body>
+</html>
